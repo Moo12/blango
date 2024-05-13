@@ -2,15 +2,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
 from .forms import CommentForm
+import logging
 
 # Create your views here.
+logger = logging.getLogger(__name__)
 
 def index(request):
   posts = Post.objects.filter(published_at__lte=timezone.now())
+
+  logger.debug("Got %d posts", len(posts))
   return render(request, "blog/index.html", {"posts": posts})
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+
+    logger.info(
+    "Created comment on Post %d for user %s", post.pk, request.user)
     
     if request.user.is_active:
       if request.method == "POST":
