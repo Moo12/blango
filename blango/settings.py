@@ -145,7 +145,7 @@ class Dev(Configuration):
         },
         "root": {
             "handlers": ["console"],
-            "level": "INFO",
+            "level": "DEBUG",
         }
     }
 
